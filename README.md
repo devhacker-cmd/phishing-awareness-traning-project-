@@ -36,3 +36,15 @@ Report the incident
 Scan the device for malware
 Phishing Awareness Quiz
 Create simple questions to test users' knowledge.
+## Features
+- Interactive phishing awareness training
+- Email, SMS, and voice phishing examples
+- Prevention techniques and security checklist
+- Phishing email simulations
+- Progress tracking dashboard
+- Completion certificate generation
+- ## Technologies Used
+- HTML5
+- CSS3
+- JavaScript
+## Screenshots
