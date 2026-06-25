@@ -1,1 +1,607 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phishing Awareness Training</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#0d0d0d;color:#fff;min-height:100vh}
+
+/* LANDING */
+#pg-landing{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 40%,#1a1020 0%,#0d0d0d 70%)}
+.landing-inner{text-align:center;max-width:480px;padding:2rem}
+.shield-wrap{width:100px;height:100px;margin:0 auto 1.5rem;border:1.5px solid #c0392b;border-radius:16px;display:flex;align-items:center;justify-content:center;background:rgba(192,57,43,0.08)}
+.landing-title{font-size:2.6rem;font-weight:700;color:#e8510a;line-height:1.2;margin-bottom:0.75rem}
+.landing-sub{font-size:1rem;color:rgba(255,255,255,0.5);margin-bottom:2.5rem}
+.name-label{font-size:0.8rem;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.name-input{width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:0.95rem;outline:none;margin-bottom:1.25rem;transition:border 0.2s}
+.name-input::placeholder{color:rgba(255,255,255,0.22)}
+.name-input:focus{border-color:rgba(232,81,10,0.6)}
+.start-btn{width:100%;padding:14px;background:linear-gradient(135deg,#e8510a,#c0392b);border:none;border-radius:10px;color:#fff;font-size:1rem;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+.start-btn:hover{opacity:0.88}
+.start-btn:disabled{opacity:0.35;cursor:default}
+
+/* WHAT IS PHISHING PAGE */
+#pg-intro{display:none;min-height:100vh;background:#0d0d0d}
+.intro-hero{background:linear-gradient(135deg,#1a0a00 0%,#0d0d0d 60%);padding:3rem 1.5rem 2rem;text-align:center;border-bottom:1px solid rgba(232,81,10,0.2)}
+.intro-badge{display:inline-block;background:rgba(232,81,10,0.15);border:1px solid rgba(232,81,10,0.35);border-radius:20px;padding:4px 14px;font-size:11px;letter-spacing:0.08em;color:#e8a87c;margin-bottom:1rem;text-transform:uppercase}
+.intro-hero h1{font-size:2.2rem;font-weight:700;color:#fff;margin-bottom:0.75rem}
+.intro-hero h1 span{color:#e8510a}
+.intro-hero p{font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto}
+.intro-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-top:1px solid rgba(255,255,255,0.06)}
+.istat{padding:1.25rem;text-align:center;background:#0d0d0d}
+.istat-n{font-size:1.8rem;font-weight:700;color:#e8510a}
+.istat-l{font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px}
+.intro-body{max-width:820px;margin:0 auto;padding:2rem 1.5rem}
+.section-label{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#e8510a;margin-bottom:0.5rem;font-weight:600}
+.section-title{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:0.4rem}
+.section-desc{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:1.5rem;line-height:1.65}
+.divider{border:none;border-top:1px solid rgba(255,255,255,0.07);margin:2.5rem 0}
+
+/* definition card */
+.def-card{background:#161616;border:1px solid rgba(232,81,10,0.2);border-radius:14px;padding:1.5rem;margin-bottom:1.5rem;display:flex;gap:1rem;align-items:flex-start}
+.def-icon{font-size:2rem;flex-shrink:0;margin-top:4px}
+.def-card h3{font-size:1rem;font-weight:600;color:#fff;margin-bottom:6px}
+.def-card p{font-size:0.83rem;color:rgba(255,255,255,0.55);line-height:1.7}
+
+/* types grid */
+.types-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:1.5rem}
+.type-card{background:#161616;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.1rem 1.2rem;transition:border-color 0.2s}
+.type-card:hover{border-color:rgba(232,81,10,0.3)}
+.type-tag{display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;padding:2px 8px;border-radius:99px;margin-bottom:8px}
+.type-card h4{font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:4px}
+.type-card p{font-size:0.79rem;color:rgba(255,255,255,0.45);line-height:1.6}
+
+/* example box */
+.example-wrap{background:#111;border:1px solid rgba(255,255,255,0.08);border-radius:14px;overflow:hidden;margin-bottom:1.5rem}
+.example-header{background:#161616;padding:0.75rem 1.1rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid rgba(255,255,255,0.07);font-size:0.78rem;color:rgba(255,255,255,0.4)}
+.example-label{background:rgba(232,81,10,0.15);color:#e8a87c;border:1px solid rgba(232,81,10,0.3);border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600;text-transform:uppercase}
+.email-sim{padding:1.1rem}
+.email-field{display:flex;gap:8px;margin-bottom:5px;font-size:0.8rem}
+.ef-label{color:rgba(255,255,255,0.3);min-width:52px}
+.ef-val{color:rgba(255,255,255,0.75)}
+.ef-red{color:#f09595;font-weight:500}
+.email-body-text{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.7}
+.fake-btn{display:inline-block;background:#d63939;color:#fff;border-radius:6px;padding:6px 16px;font-size:0.8rem;margin:8px 0;cursor:default}
+.annotation{display:flex;gap:8px;background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);border-radius:7px;padding:7px 10px;font-size:0.78rem;color:#f09595;margin:5px 0;line-height:1.5}
+.ann-dot{flex-shrink:0;margin-top:2px;color:#e8510a;font-size:10px}
+
+/* SMS example */
+.sms-bubble{background:#1e1e1e;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:1rem 1.25rem;margin-bottom:8px;font-size:0.82rem;color:rgba(255,255,255,0.7);line-height:1.65;max-width:340px}
+.sms-sender{font-size:10px;color:rgba(255,255,255,0.3);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.05em}
+
+/* prevention */
+.prev-list{display:flex;flex-direction:column;gap:10px}
+.prev-item{display:flex;gap:14px;background:#161616;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.2rem;align-items:flex-start}
+.prev-num{font-size:1.1rem;font-weight:700;color:#e8510a;min-width:26px;margin-top:1px}
+.prev-item h4{font-size:0.88rem;font-weight:600;color:#fff;margin-bottom:3px}
+.prev-item p{font-size:0.8rem;color:rgba(255,255,255,0.45);line-height:1.6}
+.prev-tip{display:inline-block;margin-top:6px;background:rgba(39,80,10,0.2);border:1px solid rgba(99,153,34,0.25);border-radius:6px;padding:3px 10px;font-size:10px;color:#97c459}
+
+/* checklist */
+.checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:1.5rem}
+.check-item{display:flex;gap:8px;align-items:flex-start;background:#161616;border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;font-size:0.8rem;color:rgba(255,255,255,0.6);line-height:1.5}
+.check-icon{color:#97c459;flex-shrink:0;font-size:14px;margin-top:1px}
+
+/* continue btn */
+.continue-bar{background:#0a0a0a;border-top:1px solid rgba(255,255,255,0.08);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.continue-btn{padding:11px 28px;background:linear-gradient(135deg,#e8510a,#c0392b);border:none;border-radius:10px;color:#fff;font-size:0.9rem;font-weight:600;cursor:pointer;transition:opacity 0.2s}
+.continue-btn:hover{opacity:0.88}
+.page-indicator{font-size:0.8rem;color:rgba(255,255,255,0.3)}
+
+/* APP (training modules etc) */
+#pg-app{display:none;min-height:100vh;background:#111}
+.topbar{background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.08);padding:0.8rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{font-size:0.95rem;font-weight:600;color:#e8510a;display:flex;align-items:center;gap:8px}
+.topbar-right{display:flex;align-items:center;gap:12px;font-size:0.8rem;color:rgba(255,255,255,0.4)}
+.prog-bar-bg{background:rgba(255,255,255,0.1);border-radius:99px;height:5px;width:110px}
+.prog-bar-fill{background:#e8510a;border-radius:99px;height:5px;transition:width 0.4s}
+.nav-tabs{display:flex;background:#0a0a0a;border-bottom:1px solid rgba(255,255,255,0.08);padding:0 1.5rem;overflow-x:auto}
+.nav-tab{padding:0.75rem 1rem;font-size:0.82rem;cursor:pointer;color:rgba(255,255,255,0.38);border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color 0.15s}
+.nav-tab.active{color:#e8510a;border-bottom-color:#e8510a}
+.content{padding:1.5rem;max-width:800px;margin:0 auto}
+.pg{display:none}.pg.active{display:block}
+
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.stat-c{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1rem;text-align:center}
+.stat-n{font-size:1.6rem;font-weight:600;color:#e8510a}
+.stat-l{font-size:11px;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px}
+.dash-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+.dash-card h3{font-size:0.9rem;font-weight:600;margin-bottom:0.75rem}
+.dash-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:0.82rem}
+.dash-row:last-child{border-bottom:none}
+.dash-row span{flex:1;color:rgba(255,255,255,0.65)}
+.pill{font-size:11px;padding:2px 10px;border-radius:99px;font-weight:500}
+.pill.done{background:rgba(39,80,10,0.4);color:#97c459;border:1px solid rgba(99,153,34,0.3)}
+.pill.pending{background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.08)}
+.info-box{background:rgba(232,81,10,0.08);border:1px solid rgba(232,81,10,0.22);border-radius:12px;padding:1rem 1.25rem;font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.6}
+
+.module-card{background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden;margin-bottom:10px}
+.mc-header{padding:1rem 1.25rem;display:flex;align-items:center;gap:12px;cursor:pointer}
+.mc-header:hover{background:rgba(255,255,255,0.02)}
+.mc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.mc-title{font-size:0.9rem;font-weight:600;color:#fff;margin-bottom:2px}
+.mc-sub{font-size:0.77rem;color:rgba(255,255,255,0.38)}
+.mc-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.mc-body{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid rgba(255,255,255,0.07)}
+.mc-body.open{display:block}
+.lesson h4{font-size:0.85rem;font-weight:600;margin:1rem 0 4px;color:#fff}
+.lesson p{font-size:0.81rem;color:rgba(255,255,255,0.52);line-height:1.65;margin-bottom:6px}
+.hbox{border-radius:8px;padding:10px 14px;font-size:0.8rem;line-height:1.6;margin:7px 0}
+.hbox.red{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);color:#f09595}
+.hbox.orange{background:rgba(232,81,10,0.09);border:1px solid rgba(232,81,10,0.22);color:#e8a87c}
+.hbox.green{background:rgba(39,80,10,0.18);border:1px solid rgba(99,153,34,0.25);color:#97c459}
+.hbox.blue{background:rgba(24,95,165,0.1);border:1px solid rgba(55,138,221,0.2);color:#85b7eb}
+.complete-btn{margin-top:1rem;padding:9px 20px;background:#e8510a;color:#fff;border:none;border-radius:8px;font-size:0.83rem;font-weight:600;cursor:pointer}
+.complete-btn:disabled{background:#2a2a2a;color:rgba(255,255,255,0.25);cursor:default}
+
+.sim-email-ex{background:#161616;border:1px solid rgba(255,255,255,0.09);border-radius:10px;overflow:hidden;margin:12px 0}
+.sim-head{padding:10px 14px;font-size:0.79rem;border-bottom:1px solid rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)}
+.sim-body{padding:13px 14px;font-size:0.82rem;line-height:1.7;color:rgba(255,255,255,0.7)}
+.sim-choices{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sim-btn{padding:8px 15px;border-radius:8px;font-size:0.81rem;cursor:pointer;border:1px solid rgba(255,255,255,0.1);background:#1e1e1e;color:rgba(255,255,255,0.7)}
+.sim-btn:hover{background:#2a2a2a}
+.sim-btn.danger{border-color:rgba(192,57,43,0.4);color:#f09595;background:rgba(192,57,43,0.09)}
+.sim-btn.safe{border-color:rgba(99,153,34,0.35);color:#97c459;background:rgba(39,80,10,0.13)}
+.sim-res{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.81rem;display:none;line-height:1.6}
+.sim-res.show{display:block}
+.sim-res.ok{background:rgba(39,80,10,0.18);border:1px solid rgba(99,153,34,0.25);color:#97c459}
+.sim-res.bad{background:rgba(192,57,43,0.1);border:1px solid rgba(192,57,43,0.25);color:#f09595}
+
+.cert-locked{text-align:center;padding:3rem 1rem;color:rgba(255,255,255,0.35)}
+.cert-box{background:#1a1a1a;border:1px solid rgba(232,81,10,0.28);border-radius:16px;padding:2.5rem;max-width:440px;margin:2rem auto;text-align:center}
+.cert-title{font-size:1.3rem;font-weight:700;color:#e8510a;margin-bottom:0.4rem}
+.cert-name-display{font-size:1.45rem;font-weight:600;color:#fff;margin:1rem 0;padding:0.75rem 0;border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
+.cert-badge-g{display:inline-block;background:rgba(39,80,10,0.28);color:#97c459;border:1px solid rgba(99,153,34,0.35);border-radius:20px;padding:4px 18px;font-size:0.8rem;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: LANDING -->
+<div id="pg-landing">
+  <div class="landing-inner">
+    <div class="shield-wrap">
+      <svg width="52" height="60" viewBox="0 0 52 60" fill="none">
+        <path d="M26 2L4 12v16c0 13.3 9.5 25.7 22 29 12.5-3.3 22-15.7 22-29V12L26 2z" fill="url(#sg)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+        <path d="M26 8L8 16v12c0 10.5 7.5 20.3 18 23 10.5-2.7 18-12.5 18-23V16L26 8z" fill="url(#sg2)" opacity="0.6"/>
+        <defs>
+          <linearGradient id="sg" x1="26" y1="2" x2="26" y2="57" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4da6ff"/><stop offset="100%" stop-color="#185fa5"/></linearGradient>
+          <linearGradient id="sg2" x1="26" y1="8" x2="26" y2="51" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#7dc4ff" stop-opacity="0.8"/><stop offset="100%" stop-color="#4da6ff" stop-opacity="0.2"/></linearGradient>
+        </defs>
+      </svg>
+    </div>
+    <h1 class="landing-title">Phishing Awareness<br>Training</h1>
+    <p class="landing-sub">Learn to spot scams before they catch you</p>
+    <p class="name-label">Enter your name for the completion certificate</p>
+    <input class="name-input" id="userName" type="text" placeholder="Your full name" oninput="document.getElementById('startBtn').disabled=this.value.trim().length<2"/>
+    <button class="start-btn" id="startBtn" disabled onclick="goIntro()">Start Training →</button>
+  </div>
+</div>
+
+<!-- PAGE 2: WHAT IS PHISHING -->
+<div id="pg-intro">
+  <div class="intro-hero">
+    <div class="intro-badge">Module 1 of 4 · Foundation</div>
+    <h1>What is <span>Phishing</span>?</h1>
+    <p>Understanding the threat is your first line of defence. Learn what phishing is, how it works, the types you'll encounter, and how to protect yourself.</p>
+  </div>
+  <div class="intro-stats">
+    <div class="istat"><div class="istat-n">3.4B</div><div class="istat-l">phishing emails sent daily</div></div>
+    <div class="istat"><div class="istat-n">90%</div><div class="istat-l">of breaches start with phishing</div></div>
+    <div class="istat"><div class="istat-n">₹1.77Cr</div><div class="istat-l">avg cost of a breach in India</div></div>
+  </div>
+
+  <div class="intro-body">
+
+    <!-- DEFINITION -->
+    <div class="section-label">Definition</div>
+    <div class="section-title">What exactly is phishing?</div>
+    <p class="section-desc">Phishing is a type of cyberattack where criminals disguise themselves as trusted people or organisations to trick you into revealing sensitive information or taking a harmful action.</p>
+
+    <div class="def-card">
+      <div class="def-icon">🎣</div>
+      <div>
+        <h3>The "fishing" analogy</h3>
+        <p>Just like a fisherman uses bait to lure fish, attackers use fake emails, messages, or websites as "bait" to lure victims. The bait looks real — a bank email, a delivery notification, a colleague's message — but it's a trap designed to steal your credentials, money, or data.</p>
+      </div>
+    </div>
+
+    <div class="def-card">
+      <div class="def-icon">🧠</div>
+      <div>
+        <h3>It's about hacking people, not computers</h3>
+        <p>Phishing doesn't need advanced hacking skills. It exploits human psychology — trust, fear, urgency, and curiosity. Even well-secured systems can be breached if a person inside clicks the wrong link. This is why awareness training is the most effective defence.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- TYPES -->
+    <div class="section-label">Types</div>
+    <div class="section-title">6 types of phishing attacks</div>
+    <p class="section-desc">Phishing isn't just email anymore. Attackers have evolved to use every communication channel available.</p>
+
+    <div class="types-grid">
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(24,95,165,0.2);color:#85b7eb;border:1px solid rgba(55,138,221,0.25)">Email</div>
+        <h4>Email phishing</h4>
+        <p>Mass emails impersonating banks, delivery services, or government bodies. Sent to millions hoping a percentage clicks.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(83,74,183,0.2);color:#afa9ec;border:1px solid rgba(127,119,221,0.25)">Targeted</div>
+        <h4>Spear phishing</h4>
+        <p>Personalised attack using your name, employer, or role. Much more convincing than generic emails.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(186,117,23,0.2);color:#fac775;border:1px solid rgba(186,117,23,0.3)">SMS</div>
+        <h4>Smishing</h4>
+        <p>Phishing via text messages — fake delivery alerts, bank OTP requests, or prize notifications with malicious links.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(192,57,43,0.15);color:#f09595;border:1px solid rgba(192,57,43,0.3)">Voice</div>
+        <h4>Vishing</h4>
+        <p>Phone calls from fake "tech support", "banks", or "tax authorities" pressuring you to act immediately.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(29,158,117,0.15);color:#5dcaa5;border:1px solid rgba(29,158,117,0.25)">Executive</div>
+        <h4>Whaling</h4>
+        <p>Spear phishing aimed specifically at senior executives or high-value targets within organisations.</p>
+      </div>
+      <div class="type-card">
+        <div class="type-tag" style="background:rgba(39,80,10,0.2);color:#97c459;border:1px solid rgba(99,153,34,0.25)">QR Code</div>
+        <h4>Quishing</h4>
+        <p>Fake QR codes in emails, posters, or menus that redirect to phishing sites designed to steal your data.</p>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- EXAMPLES -->
+    <div class="section-label">Real-world examples</div>
+    <div class="section-title">What phishing actually looks like</div>
+    <p class="section-desc">Every example below is annotated so you can see exactly how attackers deceive victims.</p>
+
+    <!-- Email example -->
+    <div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Example 1 — Email phishing</div>
+    <div class="example-wrap">
+      <div class="example-header">
+        <div class="example-label">⚠ Phishing email</div>
+        <span>Read the annotations — every red flag is labelled</span>
+      </div>
+      <div class="email-sim">
+        <div class="email-field"><span class="ef-label">From:</span><span class="ef-red">security@paypa1-accounts.net</span></div>
+        <div class="annotation"><span class="ann-dot">▶</span>Domain is "paypa<strong>1</strong>-accounts.net" — the letter "l" replaced with "1". Not PayPal's real domain (paypal.com).</div>
+        <div class="email-field"><span class="ef-label">Subject:</span><span class="ef-val">⚠ URGENT: Your PayPal account has been LIMITED</span></div>
+        <div class="annotation"><span class="ann-dot">▶</span>All-caps "URGENT" and "LIMITED" create panic. Legitimate companies don't do this.</div>
+        <div class="email-body-text">
+          <p>Dear Valued Customer,</p>
+          <p>We have detected <strong>suspicious activity</strong> on your account. To prevent permanent suspension you must verify your identity <strong>within 24 hours</strong>.</p>
+          <div class="annotation"><span class="ann-dot">▶</span>"24 hours" is a pressure tactic to stop you thinking clearly. Real banks always give you time.</div>
+          <p>Click below to restore access immediately:</p>
+          <div class="fake-btn">Verify My Account Now</div>
+          <div class="annotation"><span class="ann-dot">▶</span>This button would link to a fake website that steals your username and password.</div>
+          <p style="margin-top:8px;font-size:0.75rem;color:rgba(255,255,255,0.3)">© PayPal Inc. · 2211 North First Street, San Jose, CA 95131</p>
+          <div class="annotation"><span class="ann-dot">▶</span>Copying real addresses is trivial. It proves nothing about the sender's legitimacy.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SMS example -->
+    <div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em">Example 2 — Smishing (SMS)</div>
+    <div class="example-wrap" style="margin-bottom:8px">
+      <div class="example-header"><div class="example-label">⚠ Phishing SMS</div></div>
+      <div style="padding:1rem 1.25rem">
+        <div class="sms-bubble">
+          <div class="sms-sender">HDFC-Bank</div>
+          Your HDFC account has been temporarily blocked due to suspicious activity. Verify now to restore access: <span style="color:#4da6ff;text-decoration:underline">http://bit.ly/hdfc-verify9</span> — Ignore and account closes in 2hrs.
+        </div>
+        <div class="annotation" style="max-width:380px"><span class="ann-dot">▶</span>Shortened URL hides the real destination. "2hrs" creates urgency. Real HDFC never uses bit.ly links.</div>
+        <div class="sms-bubble" style="margin-top:12px;background:#1a2e1a;border-color:rgba(99,153,34,0.3)">
+          <div class="sms-sender" style="color:rgba(99,153,34,0.7)">HDFCBK (legitimate)</div>
+          Dear Customer, your a/c XX1234 was debited ₹500 on 23-Jun. If not done by you, call 1800-202-6161. —HDFC Bank
+        </div>
+        <div class="annotation" style="max-width:380px;background:rgba(39,80,10,0.15);border-color:rgba(99,153,34,0.25);color:#97c459"><span class="ann-dot" style="color:#97c459">▶</span>Legitimate bank SMS: shows partial account number, gives a real phone number, no links, no urgency.</div>
+      </div>
+    </div>
+
+    <!-- Vishing example -->
+    <div style="font-size:0.82rem;font-weight:600;color:rgba(255,255,255,0.5);margin:1.25rem 0 8px;text-transform:uppercase;letter-spacing:0.06em">Example 3 — Vishing (phone call)</div>
+    <div class="example-wrap">
+      <div class="example-header"><div class="example-label">⚠ Phishing call script</div></div>
+      <div style="padding:1.1rem 1.25rem">
+        <div style="background:#1e1a0a;border:1px solid rgba(186,117,23,0.2);border-radius:10px;padding:1rem;font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.8">
+          <span style="color:#fac775;font-weight:600">Caller:</span> "Hello, this is Rahul from SBI fraud department. We've detected a suspicious transaction of ₹45,000 on your account ending 7892. To block this immediately, I need to verify your identity. Can you please share your OTP?"<br><br>
+          <span style="color:#fac775;font-weight:600">Red flags:</span>
+          <div class="annotation" style="margin-top:6px"><span class="ann-dot">▶</span>Banks <strong>never</strong> ask for OTPs over the phone. An OTP is your private code — not even bank employees need it.</div>
+          <div class="annotation"><span class="ann-dot">▶</span>The urgency ("block this immediately") is designed to panic you into acting without verifying.</div>
+          <div class="annotation"><span class="ann-dot">▶</span>Always hang up and call your bank directly using the number on the back of your card.</div>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- PREVENTION -->
+    <div class="section-label">Prevention</div>
+    <div class="section-title">How to protect yourself</div>
+    <p class="section-desc">These habits will dramatically reduce your risk of falling victim to a phishing attack.</p>
+
+    <div class="prev-list">
+      <div class="prev-item">
+        <div class="prev-num">1</div>
+        <div>
+          <h4>Always verify the sender's email address</h4>
+          <p>Display names can be faked. Click on the sender name to reveal the real address. Check for typos, extra words, or wrong domains (paypa1.com vs paypal.com).</p>
+          <span class="prev-tip">✓ Quick check: hover over sender name → reveal full address</span>
+        </div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-num">2</div>
+        <div>
+          <h4>Never click links in unexpected emails</h4>
+          <p>Type the website address directly in your browser instead. Hover over links first — the real destination shows in your browser's status bar.</p>
+          <span class="prev-tip">✓ Rule: when in doubt, go directly to the official website</span>
+        </div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-num">3</div>
+        <div>
+          <h4>Enable multi-factor authentication (MFA)</h4>
+          <p>Even if attackers steal your password, MFA blocks them from logging in without your second factor (phone OTP, authenticator app). Enable it everywhere.</p>
+          <span class="prev-tip">✓ Priority: email, banking, social media, work accounts</span>
+        </div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-num">4</div>
+        <div>
+          <h4>Pause before acting on urgency</h4>
+          <p>Urgency is the attacker's most powerful tool. If an email says "act now", take a breath. Legitimate organisations give you time. Call them using a number you find independently.</p>
+          <span class="prev-tip">✓ Mantra: the more urgent it feels, the more suspicious you should be</span>
+        </div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-num">5</div>
+        <div>
+          <h4>Never share OTPs or passwords with anyone</h4>
+          <p>No bank, company, or government agency will ever ask for your OTP, password, or PIN over phone, email, or SMS. Ever. If someone asks, it's a scam.</p>
+          <span class="prev-tip">✓ India helpline: cybercrime.gov.in · 1930</span>
+        </div>
+      </div>
+      <div class="prev-item">
+        <div class="prev-num">6</div>
+        <div>
+          <h4>Report suspicious messages</h4>
+          <p>Don't just delete — report. Use your email client's "Report phishing" button. In India, report to cybercrime.gov.in or call 1930. Your report protects others.</p>
+          <span class="prev-tip">✓ Reporting takes 10 seconds and can save someone else</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- QUICK CHECKLIST -->
+    <div class="section-label">Quick reference</div>
+    <div class="section-title">Before you click — checklist</div>
+    <p class="section-desc" style="margin-bottom:1rem">Run through this checklist whenever you receive an unexpected email or message.</p>
+    <div class="checklist">
+      <div class="check-item"><span class="check-icon">✓</span>Is the sender's email address correct?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Were you expecting this email?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Does the link match where it claims to go?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Is there unusual urgency or pressure?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Does it ask for personal info or OTPs?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Does the greeting use your real name?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Are there spelling mistakes or odd phrasing?</div>
+      <div class="check-item"><span class="check-icon">✓</span>Is the attachment expected and from a known sender?</div>
+    </div>
+
+  </div>
+
+  <div class="continue-bar">
+    <span class="page-indicator">Page 2 of 5 · Foundation complete</span>
+    <button class="continue-btn" onclick="goApp()">Continue to Training →</button>
+  </div>
+</div>
+
+<!-- PAGE 3+: MAIN TRAINING APP -->
+<div id="pg-app">
+  <div class="topbar">
+    <div class="topbar-logo">
+      <svg width="16" height="20" viewBox="0 0 52 60" fill="none"><path d="M26 2L4 12v16c0 13.3 9.5 25.7 22 29 12.5-3.3 22-15.7 22-29V12L26 2z" fill="#e8510a"/></svg>
+      PhishGuard Training
+    </div>
+    <div class="topbar-right">
+      <span id="topPct">0% complete</span>
+      <div class="prog-bar-bg"><div class="prog-bar-fill" id="topBar" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" id="tab-dashboard" onclick="showTab('dashboard')">Dashboard</div>
+    <div class="nav-tab" id="tab-modules" onclick="showTab('modules')">Modules</div>
+    <div class="nav-tab" id="tab-simulate" onclick="showTab('simulate')">Simulation</div>
+    <div class="nav-tab" id="tab-certificate" onclick="showTab('certificate')">Certificate</div>
+  </div>
+  <div class="content">
+    <div class="pg active" id="pg-dashboard">
+      <div class="stat-row">
+        <div class="stat-c"><div class="stat-n" id="s-done">0</div><div class="stat-l">Modules done</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-sim">0/3</div><div class="stat-l">Sim score</div></div>
+        <div class="stat-c"><div class="stat-n" id="s-cert">No</div><div class="stat-l">Certified</div></div>
+      </div>
+      <div class="dash-card"><h3>Your training path</h3><div id="dash-rows"></div></div>
+      <div class="info-box">Over 90% of cyberattacks start with phishing. You've already completed the foundation module — keep going to earn your certificate!</div>
+    </div>
+    <div class="pg" id="pg-modules"><div id="modules-list"></div></div>
+    <div class="pg" id="pg-simulate">
+      <div style="font-size:0.9rem;font-weight:600;margin-bottom:4px">Email simulation</div>
+      <div style="font-size:0.81rem;color:rgba(255,255,255,0.4);margin-bottom:1.25rem">Read each email and decide what you would do.</div>
+      <div id="sim-container"></div>
+    </div>
+    <div class="pg" id="pg-certificate"><div id="cert-area"></div></div>
+  </div>
+</div>
+
+<script>
+const MODULES=[
+  {id:'m1',icon:'🔍',color:'background:#1a2030;color:#85b7eb',title:'Advanced red flags',sub:'Spotting sophisticated attacks',content:`<div class="lesson">
+    <h4>Lookalike domains</h4><p>Attackers register domains that visually resemble legitimate ones. Always check character by character.</p>
+    <div class="hbox red">paypa1.com · arnazon.com · g00gle.com · micros0ft.com · app1e.com</div>
+    <h4>Subdomain tricks</h4><p>A subdomain can contain a real company name while the actual domain is fake.</p>
+    <div class="hbox orange">paypal.com.verify-account.net → real domain is "verify-account.net", not PayPal</div>
+    <h4>HTTPS doesn't mean safe</h4><div class="hbox blue">A padlock (🔒) means the connection is encrypted — NOT that the site is legitimate. Phishing sites can and do use HTTPS. Always verify the domain itself.</div>
+    </div>`},
+  {id:'m2',icon:'📱',color:'background:#1a1030;color:#afa9ec',title:'Smishing & vishing',sub:'Attacks beyond email',content:`<div class="lesson">
+    <h4>Smishing tactics</h4><p>Shortened URLs (bit.ly, tinyurl) hide real destinations. Fake sender IDs can mimic real bank names in SMS.</p>
+    <div class="hbox red">Never click links in SMS from unknown senders. Go directly to the official app or website instead.</div>
+    <h4>Vishing scripts</h4><p>Callers create urgency: "Your account is being hacked right now." They ask for OTPs to "verify" your identity — which they then use to access your account.</p>
+    <div class="hbox orange">Script: "I'm from Microsoft. Your computer is sending us error reports. Let me help you fix it remotely." → They install malware.</div>
+    <h4>Golden rules</h4><div class="hbox green">Never share OTPs · Never install software a caller asks for · Hang up and call the official number · Banks never ask for your PIN or password</div>
+    </div>`},
+  {id:'m3',icon:'🛡',color:'background:#0d2010;color:#97c459',title:'Protecting yourself',sub:'Tools and habits that work',content:`<div class="lesson">
+    <h4>Password manager</h4><p>A password manager only auto-fills your credentials on the real site. On a fake site, it won't fill — making it an automatic phishing detector.</p>
+    <h4>Multi-factor authentication</h4><div class="hbox green">Use an authenticator app (Google Authenticator, Authy) rather than SMS where possible. Even if your password is stolen, attackers can't log in.</div>
+    <h4>Email security tools</h4><p>Most email clients have a "Report phishing" button. Using it trains spam filters and protects other users. Never just delete suspicious emails — report them.</p>
+    <div class="hbox blue">India: cybercrime.gov.in · 1930 helpline<br>Check if your email has been breached: haveibeenpwned.com</div>
+    </div>`},
+  {id:'m4',icon:'🏢',color:'background:#1a1000;color:#fac775',title:'Workplace phishing',sub:'Protecting your organisation',content:`<div class="lesson">
+    <h4>Business email compromise (BEC)</h4><p>Attackers impersonate executives or suppliers to trick employees into transferring money or sharing data.</p>
+    <div class="hbox red">Example: "This is the CEO. Please transfer ₹5 lakhs to this account urgently — I'm in a meeting, don't call me."</div>
+    <h4>What to do at work</h4><div class="hbox orange">Always verify financial requests by phone using a known number · Never email sensitive data without encryption · Report to your IT/security team immediately</div>
+    <h4>Your responsibility</h4><p>One click can compromise an entire organisation. You are the most important security control — more than any firewall or antivirus software.</p>
+    <div class="hbox green">When in doubt: stop · think · verify · report. It's always better to ask than to assume.</div>
+    </div>`}
+];
+
+const SIMS=[
+  {from:'security@paypa1-verify.net',fc:'#f09595',subject:'Your PayPal account is limited — act now',body:'Dear user,\n\nUnusual activity was detected. Verify your identity within 24 hours to avoid permanent suspension.\n\n[ Verify Account Now ]\n\nPayPal Security Team',safe:false,
+   fb:{danger:'✓ Correct! Phishing — fake domain "paypa1-verify.net", urgency pressure, and suspension threat are all red flags.',report:'✓ Perfect. Reporting is always the right call. This is clearly a phishing email.',click:'✗ That was a phishing link. The fake domain and urgency were major red flags to watch for.'}},
+  {from:'noreply@amazon.com',fc:'#97c459',subject:'Your order #302-9184772 has shipped',body:'Hello,\n\nYour Amazon order has shipped.\n\nOrder: Wireless Earbuds\nDelivery: 2–4 business days\nTracking: Available in Your Orders\n\nThank you for shopping with Amazon.',safe:true,
+   fb:{danger:'✗ This is actually a legitimate shipping email — plain, factual, no urgency, no suspicious links, real sender domain.',report:'✗ This appears legitimate. Real Amazon emails are simple and factual with no pressure tactics.',click:'✓ Correct! This is a genuine email. Safe to proceed.'}},
+  {from:'IT-support@yourcompany-helpdesk.net',fc:'#f09595',subject:'Urgent: your password expires in 2 hours',body:'Dear Employee,\n\nYour company password expires in 2 hours. Reset it immediately to avoid losing access to all systems.\n\n[ Reset Password Now ]\n\nIT Helpdesk',safe:false,
+   fb:{danger:'✓ Correct! Spear phishing — "yourcompany-helpdesk.net" is external, not your real IT domain. Real IT uses internal addresses.',report:'✓ Excellent — report to your real IT team immediately. This is a corporate credential theft attempt.',click:'✗ Dangerous! External domain + fake urgency + password request = classic spear phishing.'}}
+];
+
+let state={name:'',completed:{},simDone:0,simScore:0,openMod:null};
+
+function goIntro(){
+  const n=document.getElementById('userName').value.trim();
+  if(n.length<2)return;
+  state.name=n;
+  document.getElementById('pg-landing').style.display='none';
+  document.getElementById('pg-intro').style.display='block';
+}
+
+function goApp(){
+  document.getElementById('pg-intro').style.display='none';
+  document.getElementById('pg-app').style.display='block';
+  updateProgress();renderDash();renderModules();
+}
+
+function updateProgress(){
+  const modDone=Object.keys(state.completed).filter(k=>k.startsWith('m')).length;
+  const simDone=state.simDone>=SIMS.length?1:0;
+  const pct=Math.round(((modDone+simDone)/(MODULES.length+1))*100);
+  document.getElementById('topPct').textContent=pct+'% complete';
+  document.getElementById('topBar').style.width=pct+'%';
+  document.getElementById('s-done').textContent=modDone;
+  document.getElementById('s-sim').textContent=state.simScore+'/'+SIMS.length;
+  const certified=modDone===MODULES.length&&state.simDone>=SIMS.length;
+  document.getElementById('s-cert').textContent=certified?'Yes':'No';
+  renderDash();renderCert();
+}
+
+function renderDash(){
+  const el=document.getElementById('dash-rows');
+  if(!el)return;
+  el.innerHTML=MODULES.map(m=>`<div class="dash-row"><span>${m.icon} ${m.title}</span><span class="pill ${state.completed[m.id]?'done':'pending'}">${state.completed[m.id]?'Done':'Pending'}</span></div>`).join('')
+  +`<div class="dash-row"><span>🎯 Email simulation</span><span class="pill ${state.simDone>=SIMS.length?'done':'pending'}">${state.simDone>=SIMS.length?'Done':'Pending'}</span></div>`;
+}
+
+function renderModules(){
+  const el=document.getElementById('modules-list');
+  if(!el)return;
+  el.innerHTML=MODULES.map(m=>{
+    const done=!!state.completed[m.id];
+    const open=state.openMod===m.id;
+    return `<div class="module-card">
+      <div class="mc-header" onclick="toggleMod('${m.id}')">
+        <div class="mc-icon" style="${m.color}">${m.icon}</div>
+        <div><div class="mc-title">${m.title}</div><div class="mc-sub">${m.sub}</div></div>
+        <div class="mc-right"><span class="pill ${done?'done':'pending'}">${done?'Done':'Start'}</span><span style="color:rgba(255,255,255,0.3);font-size:12px">${open?'▲':'▼'}</span></div>
+      </div>
+      <div class="mc-body ${open?'open':''}">
+        ${m.content}
+        <button class="complete-btn" onclick="completeMod('${m.id}')" ${done?'disabled':''}>${done?'✓ Completed':'Mark as complete'}</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMod(id){state.openMod=state.openMod===id?null:id;renderModules();}
+function completeMod(id){state.completed[id]=true;state.openMod=null;updateProgress();renderModules();}
+
+function renderSim(){
+  const c=document.getElementById('sim-container');
+  if(!c)return;
+  if(state.simDone>=SIMS.length){
+    c.innerHTML=`<div style="text-align:center;padding:2.5rem;background:#1a1a1a;border:1px solid rgba(99,153,34,0.3);border-radius:12px">
+      <div style="font-size:2rem;margin-bottom:8px">✓</div>
+      <div style="font-weight:600;color:#97c459;margin-bottom:4px">Simulation complete!</div>
+      <div style="font-size:0.83rem;color:rgba(255,255,255,0.4)">You correctly identified ${state.simScore} of ${SIMS.length} emails.</div>
+    </div>`;return;
+  }
+  const s=SIMS[state.simDone];
+  const bodyHtml=s.body.replace(/\n/g,'<br>').replace(/\[([^\]]+)\]/g,'<span style="color:#4da6ff;text-decoration:underline">$1</span>');
+  c.innerHTML=`<div style="font-size:0.79rem;color:rgba(255,255,255,0.35);margin-bottom:8px">Email ${state.simDone+1} of ${SIMS.length}</div>
+  <div class="sim-email-ex">
+    <div class="sim-head">
+      <div style="margin-bottom:3px"><span style="color:rgba(255,255,255,0.3);margin-right:8px">From:</span><span style="color:${s.fc};font-weight:500">${s.from}</span></div>
+      <div><span style="color:rgba(255,255,255,0.3);margin-right:8px">Subject:</span>${s.subject}</div>
+    </div>
+    <div class="sim-body">${bodyHtml}</div>
+  </div>
+  <div style="font-size:0.83rem;font-weight:600;margin-bottom:8px">What would you do?</div>
+  <div class="sim-choices">
+    <button class="sim-btn danger" onclick="simAnswer('danger')">⚠ Mark as phishing</button>
+    <button class="sim-btn" onclick="simAnswer('report')">⚑ Report & delete</button>
+    <button class="sim-btn safe" onclick="simAnswer('click')">✓ Looks safe — proceed</button>
+  </div>
+  <div class="sim-res" id="sim-res"></div>`;
+}
+
+function simAnswer(choice){
+  const s=SIMS[state.simDone];
+  const correct=(choice==='danger'||choice==='report')&&!s.safe||(choice==='click'&&s.safe);
+  if(correct)state.simScore++;
+  const res=document.getElementById('sim-res');
+  res.className='sim-res show '+(correct?'ok':'bad');
+  res.textContent=s.fb[choice];
+  document.querySelectorAll('.sim-btn').forEach(b=>b.style.pointerEvents='none');
+  setTimeout(()=>{state.simDone++;if(state.simDone>=SIMS.length){state.completed['sim']=true;updateProgress();}renderSim();},3000);
+}
+
+function renderCert(){
+  const a=document.getElementById('cert-area');
+  if(!a)return;
+  const modDone=Object.keys(state.completed).filter(k=>k.startsWith('m')).length;
+  const certified=modDone===MODULES.length&&state.simDone>=SIMS.length;
+  if(!certified){
+    a.innerHTML=`<div class="cert-locked"><div style="font-size:3rem;margin-bottom:1rem">🔒</div><p style="font-size:0.9rem;margin-bottom:1.25rem">Complete all 4 modules and the simulation to unlock your certificate.</p><button onclick="showTab('modules')" style="padding:9px 20px;background:#e8510a;color:#fff;border:none;border-radius:8px;font-size:0.83rem;font-weight:600;cursor:pointer">Go to modules →</button></div>`;
+  } else {
+    const today=new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'});
+    a.innerHTML=`<div class="cert-box"><div style="font-size:3rem;margin-bottom:0.75rem">🏅</div><div style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:rgba(255,255,255,0.3);margin-bottom:6px">Certificate of completion</div><div class="cert-title">Phishing Awareness Training</div><div class="cert-name-display">${state.name}</div><div style="font-size:0.82rem;color:rgba(255,255,255,0.45);margin-bottom:1.25rem;line-height:1.6">This certifies successful completion of all modules, simulations, and assessments in the PhishGuard cybersecurity training programme.</div><div class="cert-badge-g">✓ Fully certified · Simulation: ${state.simScore}/${SIMS.length}</div><div style="font-size:0.75rem;color:rgba(255,255,255,0.25);margin-top:1rem">Issued: ${today}</div></div>`;
+  }
+}
+
+function showTab(id){
+  document.querySelectorAll('.pg').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('pg-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  if(id==='simulate')renderSim();
+  if(id==='certificate')renderCert();
+}
+</script>
+</body>
+</html>
