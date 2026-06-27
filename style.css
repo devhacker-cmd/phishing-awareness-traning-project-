@@ -1,0 +1,85 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #0d0d0d;
+  color: #fff;
+  min-height: 100vh;
+}
+
+/* LANDING PAGE */
+#pg-landing {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at 50% 40%,
+    #1a1020 0%,
+    #0d0d0d 70%
+  );
+}
+
+.landing-inner {
+  text-align: center;
+  max-width: 480px;
+  padding: 2rem;
+}
+
+.shield-wrap {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 1.5rem;
+  border: 1.5px solid #c0392b;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(192, 57, 43, 0.08);
+}
+
+.landing-title {
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: #e8510a;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.landing-sub {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2.5rem;
+}
+
+.name-input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 0.95rem;
+  outline: none;
+  margin-bottom: 1.25rem;
+}
+
+.start-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #e8510a, #c0392b);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.start-btn:hover {
+  opacity: 0.88;
+}
