@@ -48,4 +48,4 @@ Create simple questions to test users' knowledge.
 - CSS3
 - JavaScript
 ## Screenshots
-! [image](https://github.com/devhacker-cmd/phishing-awareness-traning-project-/blob/56a5f61740e2197bf8a3d7d42e16375095ee3498/Screenshot%202026-06-27%20190455.png)
+![image](https://github.com/devhacker-cmd/phishing-awareness-traning-project-/blob/56a5f61740e2197bf8a3d7d42e16375095ee3498/Screenshot%202026-06-27%20190455.png)
